@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import setAuthToken from './utils/setAuthToken'
+import { loadUser } from './store/actions/auth-actions'
+import store from './store/store'
 
 //PAGINAS
 import LoginPage from './pages/LoginPage/LoginPage'
 import RegisterPage from './pages/RegisterPage/RegisterPage'
+import ErrorPage from './pages/ErrorPage/ErrorPage'
 //COMPONENTES
 import LoadingBar from 'react-redux-loading-bar'
 
 function App() {
+  useEffect(() => {
+    setAuthToken(localStorage.token)
+
+    store.dispatch(loadUser())
+  }, [])
+
   return (
     <>
       <LoadingBar
@@ -18,6 +28,7 @@ function App() {
         <Switch>
           <Route path="/login" component={LoginPage} />
           <Route path="/registrate" component={RegisterPage} />
+          <Route path="/error" component={ErrorPage} />
         </Switch>
       </Router>
     </>  

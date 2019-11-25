@@ -1,9 +1,10 @@
-import { USER_LOADED, LOGIN_SUCCESS } from '../definitions/auth-definitions'
+import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED } from '../definitions/auth-definitions'
 
 const initialState = {
   user: null,
   isAuthenticated: false,
-  token: localStorage.getItem('token')
+  token: localStorage.getItem('token'),
+  error: []
 }
 
 const authReducer = function(state = initialState, action) {
@@ -21,6 +22,11 @@ const authReducer = function(state = initialState, action) {
         ...action.payload
         //user: { ...action.payload.user },
         //isAuthenticated: action.payload.isAuthenticated
+      }
+    case LOGIN_FAILED:
+      return {
+        ...state,
+        error: [...action.payload.error]
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import request from '../../api/request'
-import { USER_LOADED, LOGIN_SUCCESS } from '../definitions/auth-definitions'
+import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED } from '../definitions/auth-definitions'
 import setAuthToken from '../../utils/setAuthToken'
 
 export const loginUser = ({ email, password, rol }) => async distpatch => {
@@ -15,7 +15,11 @@ export const loginUser = ({ email, password, rol }) => async distpatch => {
       }
     })
   } catch (error) {
-    console.log(error.data)
+    console.log(error.response.data)
+    distpatch({
+      type: LOGIN_FAILED,
+      payload: { error: error.response.data.error }
+    })
   }
 }
 

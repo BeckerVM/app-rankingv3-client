@@ -5,7 +5,6 @@ import setAuthToken from '../../utils/setAuthToken'
 export const loginUser = ({ email, password, rol }) => async distpatch => {
   try {
     const response = await request.post(`auth/login/${rol}`, { email, password })
-    console.log(response.data)
 
     distpatch({ 
       type: LOGIN_SUCCESS, 

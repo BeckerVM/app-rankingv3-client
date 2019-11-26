@@ -1,4 +1,4 @@
-import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED } from '../definitions/auth-definitions'
+import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED, CLEAR_ERROR_LOGIN } from '../definitions/auth-definitions'
 
 const initialState = {
   user: null,
@@ -27,6 +27,11 @@ const authReducer = function(state = initialState, action) {
       return {
         ...state,
         error: [...action.payload.error]
+      }
+    case CLEAR_ERROR_LOGIN:
+      return {
+        ...state,
+        error: []
       }
     default:
       return state

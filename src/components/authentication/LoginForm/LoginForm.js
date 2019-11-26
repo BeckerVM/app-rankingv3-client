@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Formik, Form, Field } from 'formik'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import './styles.css'
 
 import { loginUser } from '../../../store/actions/auth-actions'
 
-const LoginForm = function({ loginUser, auth: { error } }) {
+const LoginForm = function({ loginUser, auth: { error }, history }) {
   const [email, setEmail] = useState('')
   const [valueButton, setValueButton] = useState('Siguiente')
   const [pressNextButton, setpressNextButton] = useState(false)
@@ -26,8 +27,8 @@ const LoginForm = function({ loginUser, auth: { error } }) {
       loginUser({ 
         email: values.email, 
         password: values.password, 
-        rol: 'client' 
-      })
+        rol: 'client', 
+      }, history)
     }
   }
 
@@ -87,6 +88,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, {
+export default withRouter(connect(mapStateToProps, {
   loginUser
-})(LoginForm)
+})(LoginForm))

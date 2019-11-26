@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import PublicRoute from './components/routing/PublicRoute'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './store/actions/auth-actions'
@@ -28,6 +28,7 @@ function App() {
       <Router>
         <Switch>
           <PublicRoute  path="/login" component={LoginPage} />
+          <Redirect to="/login" from="/ups" />
           <PublicRoute  path="/registrate" component={RegisterPage} />
           <Route path="/error" component={ErrorPage} />
         </Switch>

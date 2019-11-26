@@ -1,8 +1,8 @@
 import request from '../../api/request'
-import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED } from '../definitions/auth-definitions'
+import { USER_LOADED, LOGIN_SUCCESS, LOGIN_FAILED, CLEAR_ERROR_LOGIN } from '../definitions/auth-definitions'
 import setAuthToken from '../../utils/setAuthToken'
 
-export const loginUser = ({ email, password, rol }) => async distpatch => {
+export const loginUser = ({ email, password, rol }, history) => async distpatch => {
   try {
     const response = await request.post(`auth/login/${rol}`, { email, password })
 
@@ -14,12 +14,21 @@ export const loginUser = ({ email, password, rol }) => async distpatch => {
         token: response.data.token
       }
     })
+
+    history.push('/error')
+    
+    distpatch({ type: CLEAR_ERROR_LOGIN })
   } catch (error) {
-    console.log(error.response.data)
     distpatch({
       type: LOGIN_FAILED,
       payload: { error: error.response.data.error }
     })
+
+    setTimeout(() => {
+      history.push('/ups')
+
+      distpatch({ type: CLEAR_ERROR_LOGIN })
+    }, 2000)
   }
 }
 
